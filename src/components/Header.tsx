@@ -1,5 +1,5 @@
 import { createSignal, onMount, onCleanup, Show } from "solid-js";
-import { CloudSun, Locate, Moon, Sun, RefreshCw } from "lucide-solid";
+import { CloudSun, Locate, Moon, Sun, RefreshCw, Download } from "lucide-solid";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -9,6 +9,8 @@ interface HeaderProps {
   isRefreshing: boolean;
   theme: "light" | "dark";
   onToggleTheme: () => void;
+  canInstall?: boolean;
+  onInstall?: () => void;
 }
 
 export function Header(props: HeaderProps) {
@@ -56,6 +58,19 @@ export function Header(props: HeaderProps) {
 
         {/* Action Controls */}
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* PWA Install button */}
+          <Show when={props.canInstall && props.onInstall}>
+            <button
+              type="button"
+              onClick={props.onInstall}
+              class="inline-flex items-center justify-center gap-1.5 rounded-full text-xs font-semibold transition-all apple-press cursor-pointer border border-primary/50 bg-primary/15 hover:bg-primary/25 text-primary shadow-xs px-2.5 py-1.5 sm:px-3 sm:py-2"
+              title="Install App to Home Screen / ដំឡើងកម្មវិធី"
+            >
+              <Download class="size-3.5 shrink-0" />
+              <span class="hidden sm:inline font-khmer text-[11px]">ដំឡើងកម្មវិធី</span>
+            </button>
+          </Show>
+
           {/* Location button */}
           <button
             type="button"

@@ -2,6 +2,7 @@ import {
   createSignal,
   createEffect,
   onMount,
+  onCleanup,
   Show,
 } from "solid-js";
 import {
@@ -24,7 +25,12 @@ import { WeatherMap } from "@/components/WeatherMap";
 import { LocationBanner } from "@/components/LocationBanner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AlertTriangle, RefreshCw } from "lucide-solid";
+import { AlertTriangle, RefreshCw, WifiOff } from "lucide-solid";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
 
 export function App() {
   // Theme state
@@ -85,6 +91,14 @@ export function App() {
   const [isLoading, setIsLoading] = createSignal<boolean>(false);
   const [errorMessage, setErrorMessage] = createSignal<string | null>(null);
 
+  // Network online/offline status
+  const [isOnline, setIsOnline] = createSignal<boolean>(
+    typeof navigator !== "undefined" ? navigator.onLine : true
+  );
+
+  // PWA Install prompt state
+  const [deferredPrompt, setDeferredPrompt] = createSignal<BeforeInstallPromptEvent | null>(null);
+
   // User GPS coordinates [lng, lat]
   const [userLocation, setUserLocation] = createSignal<[number, number] | null>(null);
   const [locationStatus, setLocationStatus] = createSignal<
@@ -120,7 +134,7 @@ export function App() {
     loadWeather(province);
   };
 
-  // Initial load & sequential background preloading
+  // Initial load & sequential background preloading + PWA event listeners
   onMount(() => {
     loadWeather(activeProvince());
 
@@ -147,7 +161,38 @@ export function App() {
     };
 
     loadSequentially();
+
+    // Online / Offline listeners
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    // PWA beforeinstallprompt listener
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    onCleanup(() => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    });
   });
+
+  // Handle PWA installation
+  const handleInstallApp = async () => {
+    const prompt = deferredPrompt();
+    if (!prompt) return;
+
+    await prompt.prompt();
+    const choice = await prompt.userChoice;
+    if (choice.outcome === "accepted") {
+      setDeferredPrompt(null);
+    }
+  };
 
   // GPS detection
   const handleDetectLocation = () => {
@@ -208,6 +253,8 @@ export function App() {
         isRefreshing={isLoading()}
         theme={theme()}
         onToggleTheme={handleToggleTheme}
+        canInstall={Boolean(deferredPrompt())}
+        onInstall={handleInstallApp}
       />
 
       {/* GPS Location Status Banner */}
@@ -218,6 +265,18 @@ export function App() {
         errorMessage={errorMessage()}
         onDismiss={() => setLocationStatus(null)}
       />
+
+      {/* Offline Status Banner */}
+      <Show when={!isOnline()}>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-3 w-full">
+          <div class="flex items-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs text-amber-600 dark:text-amber-400 backdrop-blur-md">
+            <WifiOff class="size-4 shrink-0" />
+            <span class="font-khmer">
+              គ្មានការតភ្ជាប់អ៊ីនធឺណិត (Offline) · កំពុងបង្ហាញទិន្នន័យដែលបានរក្សាទុកក្នុងឃ្លាំងសម្ងាត់ PWA
+            </span>
+          </div>
+        </div>
+      </Show>
 
       {/* Error alert banner */}
       <Show when={errorMessage()}>
@@ -305,7 +364,7 @@ export function App() {
       <footer class="mt-auto border-t bg-card/40 backdrop-blur-md py-6 text-center text-xs text-muted-foreground">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-center gap-3">
           <div class="text-[11px]">
-            Built with Love ©{new Date().getFullYear()} Mengleang · Powered by Solid.js
+            Built with Love ©{new Date().getFullYear()} Mengleang · Powered by Solid.js PWA
           </div>
         </div>
       </footer>
