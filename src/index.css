@@ -1,0 +1,292 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Local Apple-grade typography: Inter (Latin) */
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter_18pt-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter_18pt-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter_18pt-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter_18pt-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Local Apple-grade typography: Inter Khmer Looped (Khmer) */
+@font-face {
+  font-family: 'Inter Khmer Looped';
+  src: url('./assets/fonts/InterKhmerLooped-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Khmer Looped';
+  src: url('./assets/fonts/InterKhmerLooped-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Khmer Looped';
+  src: url('./assets/fonts/InterKhmerLooped-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Khmer Looped';
+  src: url('./assets/fonts/InterKhmerLooped-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: 'Inter', 'Inter Khmer Looped', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --font-sans: 'Inter', 'Inter Khmer Looped', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  --font-khmer: 'Inter Khmer Looped', 'Inter', sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(0.985 0.005 240);
+  --foreground: oklch(0.15 0.02 260);
+  --card: oklch(1 0 0 / 72%);
+  --card-foreground: oklch(0.15 0.02 260);
+  --popover: oklch(1 0 0 / 90%);
+  --popover-foreground: oklch(0.15 0.02 260);
+  --primary: oklch(0.48 0.18 245);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.95 0.01 240);
+  --secondary-foreground: oklch(0.2 0.02 250);
+  --muted: oklch(0.94 0.01 240);
+  --muted-foreground: oklch(0.48 0.02 250);
+  --accent: oklch(0.94 0.02 245);
+  --accent-foreground: oklch(0.2 0.02 250);
+  --destructive: oklch(0.58 0.24 27);
+  --border: oklch(0.88 0.01 240 / 60%);
+  --input: oklch(0.88 0.01 240 / 70%);
+  --ring: oklch(0.48 0.18 245);
+  --radius: 1.125rem;
+}
+
+.dark {
+  --background: oklch(0.11 0.02 260);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.17 0.025 260 / 65%);
+  --card-foreground: oklch(0.98 0.005 240);
+  --popover: oklch(0.18 0.025 260 / 88%);
+  --popover-foreground: oklch(0.98 0.005 240);
+  --primary: oklch(0.65 0.18 240);
+  --primary-foreground: oklch(0.11 0.02 260);
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.98 0.005 240);
+  --muted: oklch(0.2 0.02 260);
+  --muted-foreground: oklch(0.68 0.02 240);
+  --accent: oklch(0.24 0.03 260);
+  --accent-foreground: oklch(0.98 0.005 240);
+  --destructive: oklch(0.7 0.19 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.65 0.18 240);
+}
+
+.maplibregl-ctrl-attrib {
+  display: none;
+}
+
+/* Apple Materials & Translucent Glassmorphism */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .apple-glass {
+  background: rgba(24, 28, 42, 0.62);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* Disable all transitions instantly during theme toggle to prevent color flickering & component-by-component lag */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+/* Apple Fluid Tactile Press Feedback */
+.apple-press {
+  transition: transform 120ms cubic-bezier(0.2, 0.8, 0.4, 1), filter 120ms ease, box-shadow 120ms ease;
+  will-change: transform;
+}
+.apple-press:hover {
+  filter: brightness(1.03);
+}
+.apple-press:active {
+  transform: scale(0.965);
+  filter: brightness(0.97);
+}
+
+/* Apple Weather Atmospheric Ambient Aura */
+.atmosphere-sunny {
+  background: radial-gradient(circle at 15% 15%, oklch(0.78 0.18 68 / 18%) 0%, transparent 45%),
+              radial-gradient(circle at 85% 85%, oklch(0.68 0.16 230 / 14%) 0%, transparent 55%);
+}
+
+.atmosphere-rainy {
+  background: radial-gradient(circle at 20% 15%, oklch(0.52 0.14 220 / 22%) 0%, transparent 55%),
+              radial-gradient(circle at 80% 85%, oklch(0.42 0.16 255 / 26%) 0%, transparent 60%);
+}
+
+.atmosphere-thunder {
+  background: radial-gradient(circle at 50% 12%, oklch(0.48 0.2 295 / 28%) 0%, transparent 60%),
+              radial-gradient(circle at 85% 85%, oklch(0.36 0.16 265 / 35%) 0%, transparent 65%);
+}
+
+.atmosphere-cloudy {
+  background: radial-gradient(circle at 20% 20%, oklch(0.62 0.04 240 / 18%) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, oklch(0.52 0.04 250 / 18%) 0%, transparent 50%);
+}
+
+.atmosphere-night {
+  background: radial-gradient(circle at 85% 15%, oklch(0.65 0.14 275 / 20%) 0%, transparent 50%),
+              radial-gradient(circle at 15% 85%, oklch(0.32 0.12 245 / 30%) 0%, transparent 55%);
+}
+
+/* Custom Glassmorphic Scrollbar */
+.custom-glass-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 150, 150, 0.35) transparent;
+}
+.custom-glass-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-glass-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-glass-scroll::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.35);
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+.custom-glass-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.6);
+}
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Maplibre custom popup styling */
+.maplibregl-popup-content {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.maplibregl-popup-tip {
+  display: none !important;
+}
+
+/* Khmer Typography Safety */
+.font-khmer {
+  font-family: var(--font-khmer);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    font-family: var(--font-sans);
+  }
+
+  /* Prevent page zooming when input is focused on mobile screen */
+  @media screen and (max-width: 768px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Prevent unintended double-tap zoom gestures on interactive elements */
+  input,
+  select,
+  textarea,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
