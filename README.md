@@ -47,6 +47,7 @@ A high-performance real-time weather forecasting and interactive geospatial appl
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) + Apple Glassmorphism System |
 | **Map Engine** | [MapLibre GL](https://maplibre.org/) |
 | **Icons** | [Lucide Solid](https://lucide.dev/) |
+| **PWA & Offline** | [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) (Workbox Caching & Web Manifest) |
 | **API** | MEF Open Data Weather API |
 
 ---
